@@ -1,4 +1,5 @@
 <img src="https://github.com/user-attachments/assets/3b663b88-c131-40b5-b811-39696521d017" alt="image-removebg-preview (7)" width="300"/>     
+
 # Description
 The tool 𝗲𝘅𝗶𝗳𝗰𝘂𝗿𝗹 was developed to solve the issue of downloading images in order to enumerate exiftool information. Essentially the tool will scrape all images into /tmp/exif and then it will run exiftool on them all, allowing the user to grep and search automatically.
 # Usage
