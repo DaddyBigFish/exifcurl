@@ -13,5 +13,7 @@ Jeffer Robinson
 Nicole Smith
 ```
 # Installation
-`sudo wget https://github.com/DaddyBigFish/exifcurl/raw/refs/heads/main/exifcurl -O /usr/local/bin/exifcurl`     
-`sudo chmod +x /usr/local/bin/exifcurl`
+```
+sudo wget https://github.com/DaddyBigFish/exifcurl/raw/refs/heads/main/exifcurl -O /usr/local/bin/exifcurl
+sudo chmod +x /usr/local/bin/exifcurl
+```
