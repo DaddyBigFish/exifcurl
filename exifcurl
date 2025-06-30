@@ -1,0 +1,43 @@
+#!/usr/bin/env python3
+import requests
+from bs4 import BeautifulSoup
+import subprocess
+import os
+import sys
+
+def normalize_url(url):
+    if not url.startswith('http://') and not url.startswith('https://'):
+        return 'http://' + url
+    return url
+
+def resolve_url(base, link):
+    if link.startswith('//'): return 'https:' + link
+    elif link.startswith('/'): return base.rstrip('/') + link
+    elif link.startswith('http'): return link
+    else: return base.rstrip('/') + '/' + link
+
+def scrape_and_exif(url):
+    os.makedirs('/tmp/exif', exist_ok=True)
+    html = requests.get(url, timeout=5).text
+    soup = BeautifulSoup(html, 'html.parser')
+    imgs = soup.find_all('img')
+    for i, img in enumerate(imgs):
+        src = img.get('src')
+        if not src: continue
+        img_url = resolve_url(url, src)
+        print(f'\n[+] {img_url}')
+        try:
+            r = requests.get(img_url, timeout=5)
+            path = f'/tmp/exif/image_{i}.jpg'
+            with open(path, 'wb') as f:
+                f.write(r.content)
+            subprocess.run(['exiftool', path], check=False)
+        except:
+            print('Failed to fetch/analyze.')
+
+if __name__ == '__main__':
+    if len(sys.argv) != 2:
+        print('Usage: python script.py <url>')
+        sys.exit(1)
+    url = normalize_url(sys.argv[1])
+    scrape_and_exif(url)
